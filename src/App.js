@@ -1,7 +1,7 @@
 import './App.css';
 import { useState, useEffect } from "react";
 import JobCard from './components/JobCard';
-import { CircularProgress, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Button, CircularProgress, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 
 function App() {
   const [jobs, setJobs] = useState([]); 
@@ -98,7 +98,7 @@ console.log(selectedLocation)
     
     // Check if filtered data is empty and set no data message accordingly
     if (filteredData.length === 0) {
-      setNoDataMessage("sorry: no jobs found.");
+      setNoDataMessage("No jobs found 🥲");
     } else {
       setNoDataMessage("");
     }
@@ -124,7 +124,14 @@ console.log(selectedLocation)
     setSelectedSalaryRange(event.target.value.split(',').map(Number));
   };
   
-
+const handleReset=()=>{
+  setRecords(jobs)
+  setSelectedSalaryRange('')
+  setSelectedExperienceRange('')
+  setSearchQuery('')
+  setSelectedLocation('')
+  setSelectedRole('')
+}
 
 
 
@@ -178,7 +185,7 @@ console.log(selectedLocation)
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={7} >
               <TextField
               size="small"
                 label="Company Name"
@@ -187,6 +194,11 @@ console.log(selectedLocation)
                 value={searchQuery}
                 onChange={handleSearchChange}
               />
+             
+            </Grid>
+            <Grid item xs={5} >
+             
+              <Button fullWidth variant="contained" style={{ backgroundColor:"#5CE7BD",color:"black"  }} onClick={handleReset}>Reset Filters</Button>
             </Grid>
           </Grid>
         </Grid>
@@ -200,7 +212,7 @@ console.log(selectedLocation)
           ))
         ) : (
           <Grid item xs={12}>
-            {noDataMessage && <p>{noDataMessage}</p>}
+            {noDataMessage && <Typography variant='h6'>{noDataMessage}</Typography>}
           </Grid>
         )}
       </Grid>
