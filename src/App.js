@@ -27,6 +27,7 @@ function App() {
   const [selectedSalaryRange, setSelectedSalaryRange] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+
   const fetchData = async () => {
     try {
       setIsLoading(true);
@@ -34,7 +35,7 @@ function App() {
       myHeaders.append("Content-Type", "application/json");
 
       const raw = JSON.stringify({
-        limit: 9,
+        limit: 10,
         offset: offset,
       });
 
@@ -51,20 +52,27 @@ function App() {
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
+     
       const data = await response.json();
-      setJobs(prevJobs => [...prevJobs, ...data.jdList]);
-      setOffset(prevOffset => prevOffset + 8);
-
-      // Extract locations and roles from fetched data
-      const uniqueLocations = Array.from(
-        new Set(data.jdList.map(job => job.location))
-      );
-      const uniqueRoles = Array.from(
-        new Set(data.jdList.map(job => job.jobRole))
-      );
-
-      setLocations(uniqueLocations);
-      setRoles(uniqueRoles);
+      if(data.jdList.length>0){
+ 
+        setJobs(prevJobs => [...prevJobs, ...data.jdList]);
+        setOffset(prevOffset => prevOffset + 10);
+  
+        // Extract locations and roles from fetched data
+        const uniqueLocations = Array.from(
+          new Set(data.jdList.map(job => job.location))
+        );
+        const uniqueRoles = Array.from(
+          new Set(data.jdList.map(job => job.jobRole))
+        );
+  
+        setLocations(uniqueLocations);
+        setRoles(uniqueRoles);
+      } else {
+        setNoDataMessage("That's all for today. 😊");
+      }
+     
     } catch (error) {
       console.error("Error fetching job listings:", error);
     } finally {
