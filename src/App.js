@@ -99,15 +99,6 @@ function App() {
     return () => window.removeEventListener("scroll", handleScroll); // cleanup
   }, [jobs]);
   useEffect(() => {
-    // Filter records based on selected location, role, experience, minimum salary, and company name search
-    // const filteredData = jobs.filter(job =>
-    //   (!selectedLocation || job.location.toLowerCase() === selectedLocation.toLowerCase()) &&
-    //   (!selectedRole || job.jobRole.toLowerCase() === selectedRole.toLowerCase()) &&
-    //   (job.minExp >= expRange.min && job.maxExp <= expRange.max) &&
-    //   (job.minJdSalary >= salaryRange.min && job.minJdSalary <= salaryRange.max) &&
-    //   (searchQuery === "" || job.companyName.toLowerCase().includes(searchQuery.toLowerCase()))
-    // );
-    console.log(selectedLocation);
     const filteredData = jobs.filter(job => {
       const matchesLocation =
         !selectedLocation ||
@@ -134,7 +125,6 @@ function App() {
         matchesSearchTerm
       );
     });
-    console.log(filteredData);
     setRecords(filteredData);
 
     // Check if filtered data is empty and set no data message accordingly
